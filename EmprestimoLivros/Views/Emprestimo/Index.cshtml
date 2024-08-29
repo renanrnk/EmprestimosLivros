@@ -1,0 +1,55 @@
+﻿@model IEnumerable<EmprestimoModel>
+
+<div class ="conteiner">
+    <div class="d-flex justify-content-between align-content-center mb-5">
+        <h1>Emprestimos</h1>
+        <div>
+            <a class="btn btn-success mb-3" asp-controller="Emprestimo" asp-action="Exportar"><i class="bi bi-file-earmark-plus mx-1"></i>Exportar</a>
+            <a class="btn btn-success mb-3" asp-controller="Emprestimo" asp-action="Cadastrar"><i class="bi bi-file-earmark-plus mx-1"></i>Cadastrar novo empréstimo</a>
+        </div>
+    </div>
+
+    @if(TempData["MensagemSucesso"] != null)
+    {
+        <div class="alert alert-success text-light" role="alert">
+            @TempData["MensagemSucesso"]
+        </div>
+    }
+
+    @if (TempData["MensagemErro"] != null)
+    {
+        <div class="alert alert-danger text-light" role="alert">
+            @TempData["MensagemErro"]
+        </div>
+    }
+
+<table id="Emprestimos" class="table table-light table-hover">
+    <thead>
+        <tr>
+            <th scope="col">Recebedor</th>
+            <th scope="col">Fornecedor</th> 
+            <th scope="col">Livro Emprestado</th>
+            <th scope="col">Data de Empréstimo</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null)
+        {
+            foreach (var emprestimos in Model)
+            {
+                <tr>
+                    <th scope="row">@emprestimos.Recebedor</th>
+                    <td>@emprestimos.Fornecedor</td>
+                    <td>@emprestimos.LivroEmprestado</td>
+                    <td>@emprestimos.DataEmprestimo</td>
+                    <td>
+                        <a asp-controller="Emprestimo" asp-action="Editar" asp-route-id="@emprestimos.Id" class="btn btn-warning mx-2"><i class="bi bi-pencil-square mx-1"></i>Editar</a>
+                        <a asp-controller="Emprestimo" asp-action="Excluir" asp-route-id="@emprestimos.Id" class="btn btn-danger mx-2"><i class="bi bi-trash mx-1"></i>Excluir</a>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+</div>
